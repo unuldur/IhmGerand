@@ -101,7 +101,7 @@ public class AddIngredient implements Initializable{
             radioButtons[t.ordinal()] = rb;
         }
         searchBox.getAllItems().addAll(Allergene.values());
-        searchBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        searchBox.setChange((observable, oldValue, newValue) -> {
             if(newValue == null ) return;
             searchBox.getSelectionModel().clearSelection();
             if(allergeneSet.contains(newValue)) return;

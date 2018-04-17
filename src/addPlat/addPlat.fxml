@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPlat.AddPlat">
+<VBox stylesheets="@../modifiePrint.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addPlat.AddPlat">
    <children>
       <GridPane hgap="30.0">
         <columnConstraints>
@@ -87,7 +87,7 @@
             <Region HBox.hgrow="ALWAYS" />
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDelete" text="Suprimer" />
             <Region HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#onAdd" text="Ajouter" fx:id="addButton"/>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAdd" text="Ajouter" />
          </children>
       </HBox>
    </children>

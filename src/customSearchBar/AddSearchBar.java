@@ -23,10 +23,6 @@ public class AddSearchBar<T> extends HBox {
         return combo.getAllItems();
     }
 
-    public void setOnActionButton(EventHandler e){
-        button.setOnAction((javafx.event.EventHandler<javafx.event.ActionEvent>) e);
-    }
-
     public AddSearchBar() {
         FXMLLoader loader = new FXMLLoader( getClass().getResource( "addSearchBar.fxml" ) );
 
@@ -52,16 +48,12 @@ public class AddSearchBar<T> extends HBox {
         return combo.promptTextProperty();
     }
 
-    public void setOnItemSelected(javafx.beans.value.ChangeListener<? super T> e){
-        combo.valueProperty().addListener(e);
+    public void setOnItemSelected(javafx.beans.value.ChangeListener<T> e){
+        combo.setChange(e);
     }
 
     public void resetSelection(){
         combo.getSelectionModel().clearSelection();
-    }
-
-    public T getSelectedItem(){
-        return combo.getSelectionModel().getSelectedItem();
     }
 
 

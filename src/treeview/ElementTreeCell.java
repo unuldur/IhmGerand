@@ -61,7 +61,10 @@ public class ElementTreeCell extends TreeCell<IElement> {
             setText(value.getName());
             return;
         }
-        ModifiePrint mp = new ModifiePrint(new Label(value.getName()));
+        Label name = new Label(value.getName());
+        ModifiePrint mp = new ModifiePrint(name);
+        mp.setMouseEntered(event -> name.setStyle("-fx-font-weight: bold; -fx-font-size: 15"));
+        mp.setMouseExited(event -> name.setStyle(""));
         if(value instanceof Categorie){
            buttonsCat(mp);
         }

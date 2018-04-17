@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -143,8 +144,22 @@ public class AddPlat implements Initializable{
         b.setSelected(use);
         b.setOnAction(event -> ingredients.put(e, b.isSelected()));
 
-        Button del = new Button("del");
-        Button mod = new Button("mod");
+        Button del = new Button();
+        Button mod = new Button();
+
+        mod.getStyleClass().add("icon-button");
+        mod.setPickOnBounds(true);
+
+        Region iconModifie = new Region();
+        iconModifie.getStyleClass().add("icon-modifie");
+        mod.setGraphic(iconModifie);
+
+        del.getStyleClass().add("icon-button");
+        del.setPickOnBounds(true);
+
+        Region iconDelete = new Region();
+        iconDelete.getStyleClass().add("icon-delete");
+        del.setGraphic(iconDelete);
 
         HBox hb = new HBox();
         hb.getChildren().addAll(mod, del);

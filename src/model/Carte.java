@@ -61,4 +61,18 @@ public class Carte implements ICompoPlat{
     public Set<Formule> getFormules() {
         return formules;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carte carte = (Carte) o;
+        return Objects.equals(name, carte.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name);
+    }
 }

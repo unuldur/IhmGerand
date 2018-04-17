@@ -6,52 +6,86 @@ import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
 
 
-public class ComboSearchBox<T> extends ComboBox<T> {
+public class ComboSearchBox<T> extends ComboBox<Integer> {
     private ObservableList<T> initialList;
     private ObservableList<T> bufferList = FXCollections.observableArrayList();
     private String previousValue = "";
-    private ChangeListener<String> cl = (observable, oldValue, newValue) -> {
-        previousValue = oldValue;
-        final TextField editor = this.getEditor();
-        final T selected = this.getSelectionModel().getSelectedItem();
-        if (selected == null || !selected.toString().equals(editor.getText())) {
-            filterItems(newValue, this);
 
-            this.show();
-        }
-    };
+    private ChangeListener<T> change;
+
     public ComboSearchBox() {
         super(FXCollections.observableArrayList());
         super.setEditable(true);
         initialList = FXCollections.observableArrayList();
-        this.configAutoFilterListener();
+        initialList.addListener((ListChangeListener<T>) c -> setItems(getIndexes(initialList)));
+        StringConverter<Integer> sc = new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                if(object == null || initialList.get(object) == null) return "";
+                return initialList.get(object).toString();
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                int i = 0;
+                for (T obj :
+                        initialList) {
+                    if (string.equals(obj.toString()))
+                        return i;
+                    i++;
+                }
+                return -1;
+            }
+        };
+        setCellFactory(lv -> {
+            ListCell<Integer> cell = new ListCell<Integer>() {
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : sc.toString(item));
+                }
+            };
+            cell.setOnMousePressed(e -> {
+                if (! cell.isEmpty()) {
+                    change.changed(null, null, initialList.get(cell.getItem()));
+                }
+            });
+            return cell ;
+        });
+        this.setOnKeyReleased(event -> {
+            if(event.getCode() == KeyCode.ENTER){
+                change.changed(null, null, initialList.get(getSelectionModel().getSelectedItem()));
+            }
+        });
+        configAutoFilterListener();
     }
 
+    private void configAutoFilterListener() {
+        this.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            previousValue = oldValue;
+            final TextField editor = this.getEditor();
+            final Integer selected = this.getSelectionModel().getSelectedItem();
+            if (selected == null || !initialList.get(selected).toString().equals(editor.getText())) {
+                filterItems(newValue, this);
 
-    public ComboSearchBox(ObservableList<T> items) {
-        super(items);
-        super.setEditable(true);
-
-        this.initialList = items;
-
-        this.configAutoFilterListener();
+                this.show();
+            }
+        });
     }
 
-    public void configAutoFilterListener() {
-        this.getEditor().textProperty().addListener(cl);
-    }
-
-    public void removeListeners(){
-        getEditor().textProperty().removeListener(cl);
-    }
-
-    private void filterItems(String filter, ComboBox<T> comboBox) {
+    private void filterItems(String filter, ComboBox<Integer> comboBox) {
         if (filter.startsWith(previousValue) && !previousValue.isEmpty()) {
             ObservableList<T> filteredList = this.readFromList(filter, bufferList);
             bufferList.clear();
@@ -59,8 +93,18 @@ public class ComboSearchBox<T> extends ComboBox<T> {
         } else {
             bufferList = this.readFromList(filter, initialList);
         }
-        System.out.println(bufferList);
-        comboBox.setItems(bufferList);
+        comboBox.hide();
+        comboBox.setItems(getIndexes(bufferList));
+        comboBox.show();
+    }
+
+    private ObservableList<Integer> getIndexes(ObservableList<T> items){
+        ObservableList<Integer> i = FXCollections.observableArrayList();
+        for (T item :
+                items) {
+            i.add(initialList.indexOf(item));
+        }
+        return i;
     }
 
     private ObservableList<T> readFromList(String filter, ObservableList<T> originalList) {
@@ -74,7 +118,13 @@ public class ComboSearchBox<T> extends ComboBox<T> {
         return filteredList;
     }
 
+
+
     public ObservableList<T> getAllItems() {
         return initialList;
+    }
+
+    public void setChange(ChangeListener<T> change) {
+        this.change = change;
     }
 }
