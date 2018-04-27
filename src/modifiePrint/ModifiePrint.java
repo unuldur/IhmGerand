@@ -69,6 +69,7 @@ public class ModifiePrint extends HBox {
             if(mouseEntered != null){
                 mouseEntered.actionPerformed(null);
             }
+            setStyle("-fx-background-color: beige");
         });
 
         setOnMouseExited(e ->{
@@ -79,6 +80,7 @@ public class ModifiePrint extends HBox {
             if(mouseExited != null){
                 mouseExited.actionPerformed(null);
             }
+            setStyle("");
         });
 
 

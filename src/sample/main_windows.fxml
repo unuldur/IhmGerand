@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<HBox prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: beige;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0">
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" style="-fx-background-color: beige;">
          <children>
             <ImageView fitWidth="150.0" preserveRatio="true">
                <image>
@@ -35,7 +35,7 @@
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" style="-fx-background-color: #FFE4BA;">
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" style="-fx-background-color: antiquewhite;">
                <children>
                   <TextField fx:id="titreMenu" minWidth="200.0" promptText="Titre">
                      <HBox.margin>
