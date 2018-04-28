@@ -103,7 +103,7 @@ public class AddIngredient implements Initializable{
         searchBox.getAllItems().addAll(Allergene.values());
         searchBox.setChange((observable, oldValue, newValue) -> {
             if(newValue == null ) return;
-            searchBox.getSelectionModel().clearSelection();
+            searchBox.clearSelection();
             if(allergeneSet.contains(newValue)) return;
             addAlergene(newValue);
         });

@@ -29,11 +29,13 @@ public class ComboSearchBox<T> extends ComboBox<Integer> {
         super(FXCollections.observableArrayList());
         super.setEditable(true);
         initialList = FXCollections.observableArrayList();
-        initialList.addListener((ListChangeListener<T>) c -> setItems(getIndexes(initialList)));
+        initialList.addListener((ListChangeListener<T>) c -> {
+            setItems(getIndexes(initialList));
+        });
         StringConverter<Integer> sc = new StringConverter<Integer>() {
             @Override
             public String toString(Integer object) {
-                if(object == null || initialList.get(object) == null) return "";
+                if(object == null || object < 0 || object >= initialList.size()) return "";
                 return initialList.get(object).toString();
             }
 
@@ -69,6 +71,7 @@ public class ComboSearchBox<T> extends ComboBox<Integer> {
                 change.changed(null, null, initialList.get(getSelectionModel().getSelectedItem()));
             }
         });
+        setConverter(sc);
         configAutoFilterListener();
     }
 
@@ -126,5 +129,17 @@ public class ComboSearchBox<T> extends ComboBox<Integer> {
 
     public void setChange(ChangeListener<T> change) {
         this.change = change;
+    }
+
+    public void clearSelection(){
+        ObservableList<T> tmp = FXCollections.observableArrayList(initialList);
+        initialList = FXCollections.observableArrayList();
+        setItems(getIndexes(initialList));
+        getSelectionModel().selectFirst();
+        initialList.addAll(tmp);
+        setItems(getIndexes(initialList));
+        bufferList = FXCollections.observableArrayList();
+        previousValue = "";
+        show();
     }
 }

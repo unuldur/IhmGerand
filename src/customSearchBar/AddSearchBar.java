@@ -53,7 +53,7 @@ public class AddSearchBar<T> extends HBox {
     }
 
     public void resetSelection(){
-        combo.getSelectionModel().clearSelection();
+        combo.clearSelection();
     }
 
 
