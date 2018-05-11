@@ -91,6 +91,10 @@ public class AddPlat implements Initializable{
         addButton.setText("Modifier");
     }
 
+    public void nameInit(String name){
+        nomField.setText(name);
+    }
+
     private int rowact = 1;
 
     @Override
@@ -114,6 +118,7 @@ public class AddPlat implements Initializable{
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 AddIngredient controller = loader.getController();
+                controller.nameInit(searchIngredient.combo.getPreviousValue());
                 stage.setTitle("Ajouter Ingredient");
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL);

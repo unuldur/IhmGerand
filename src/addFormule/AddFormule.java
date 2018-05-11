@@ -78,6 +78,10 @@ public class AddFormule implements Initializable{
         addButton.setText("Modifier");
     }
 
+    public void nameInit(String name){
+        nomField.setText(name);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         deleteButton.setManaged(false);

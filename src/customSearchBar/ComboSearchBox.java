@@ -23,6 +23,10 @@ public class ComboSearchBox<T> extends ComboBox<Integer> {
     private ObservableList<T> bufferList = FXCollections.observableArrayList();
     private String previousValue = "";
 
+    public String getPreviousValue() {
+        return previousValue;
+    }
+
     private ChangeListener<T> change;
 
     public ComboSearchBox() {

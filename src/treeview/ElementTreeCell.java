@@ -223,6 +223,8 @@ public class ElementTreeCell extends TreeCell<IElement> {
                 stage.setTitle("Ajouter plat");
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL);
+
+                controller.nameInit(sb.combo.getPreviousValue());
                 stage.showAndWait();
                 if (controller.getAction() == null) return;
                 switch (controller.getAction())
@@ -254,6 +256,7 @@ public class ElementTreeCell extends TreeCell<IElement> {
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 AddFormule controller = loader.getController();
+                controller.nameInit(sb.combo.getPreviousValue());
                 stage.setTitle("Ajouter formule");
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -293,6 +296,7 @@ public class ElementTreeCell extends TreeCell<IElement> {
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 AddCategorie controller = loader.getController();
+                controller.nameInit(sb.combo.getPreviousValue());
                 stage.setTitle("Ajouter categorie");
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL);

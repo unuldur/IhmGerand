@@ -79,6 +79,10 @@ public class AddIngredient implements Initializable{
         addButton.setText("Modifier");
     }
 
+    public void nameInit(String name){
+        nomField.setText(name);
+    }
+
     public Ingredient getIngredient() {
         return ingredient;
     }

@@ -28,6 +28,10 @@ public class AddCategorie implements Initializable{
         addButton.setText("Modifier");
     }
 
+    public void nameInit(String name){
+        nameText.setText(name);
+    }
+
     public void onCancel(ActionEvent actionEvent) {
         action = ActionWindow.CANCEL;
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
